@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        .password-strength-high { color: #28a745; }
+        .password-strength-medium { color: #ffc107; }
+        .password-strength-low { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="url_for('index')">SecretPass</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('logout')}}"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-4">
+        <h1 class="mb-4">Mis Contraseñas</h1>
+        
+        <!-- Botón para agregar nueva contraseña -->
+        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addPasswordModal">
+            <i class="bi bi-plus-circle"></i> Agregar Nueva Contraseña
+        </button>
+
+        <!-- Tabla de contraseñas -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Sitio Web</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                        <th>Fortaleza</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for c in cuentas%}
+                    <tr>
+                        <td> {{c[2]}} </td>
+                        <td> {{c[3]}} </td>
+                        <td>
+                            <span class="password-hidden"> {{c[4]}} </span>
+                          
+                        </td>
+                        <td><span class="password-strength-high"><i class="bi bi-shield-fill-check"></i> Alta</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#editPasswordModal">
+                                <a href=" /v_editar/{{c[0]}} "><i class="bi bi-pencil"></i></a> Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger">
+                                <a href=" /eliminar/{{c[0]}} "><i class="bi bi-trash"></i></a> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal para agregar nueva contraseña -->
+    <div class="modal fade" id="addPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Nueva Contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/agregar" method="POST">
+                        <div class="mb-3">
+                            <label for="newWebsite" class="form-label">Sitio Web</label>
+                            <input type="text" name="sitio" class="form-control" id="newWebsite" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newUsername" class="form-label">Usuario</label>
+                            <input type="text" name="usuario" class="form-control" id="newUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Contraseña</label>
+                            <input type="password" name="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar contraseña -->
+  
+                
+                    
+                
+      
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+</body>
+</html>
+
